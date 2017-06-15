@@ -215,7 +215,7 @@ function drawAll() {
     }
 
     // draw the score
-    ctx.font = "14px Times New Roman";
+    ctx.font = "20px Times New Roman";
     ctx.fillStyle = "black";
     ctx.fillText("Score: " + score, 10, 15);
     $('span').text('Score: ' + score, 10, 15);
