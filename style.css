@@ -16,18 +16,40 @@
   width: 57px;
 }
 
+.main-container{
+  /*background-image: url("images/paper-mario.png");*/
+}
+
+body{
+
+  background-image: url("images/paper-mario.png");
+}
+
+#SplashScreen{
+  width: 961px;
+  height: 536px;
+  position: absolute;
+  left: 16%;
+  /* top: 57%; */
+  background: rgba(71, 82, 93, 0.53);
+}
+
+.score-box{
+  float: left;
+}
+
 .brand-img{
-  width: 150px;
+  width: 300px;
 }
 
 
-.btn-primary{
+/*.btn-primary{
   position: relative;
   top: 34px;
-  background-color: #000000 !important;
-  border-color: #221e1f !important;
+  background-color: #fff !important;
+  border: 2px solid #221e1f !important;
   font-size: 20px !important;
-}
+}*/
 
 
 /*#animation{font-size:40px; margin-top:40px; margin-left:50px;}*/

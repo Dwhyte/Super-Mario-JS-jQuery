@@ -16,19 +16,30 @@
       <!-- <div id="animate-area">
 
       </div> -->
-      <div class="container-fluid">
+      <div class="container-fluid main-container">
         <!-- <audio controls autoplay style="display:none;"> -->
         <!-- <audio controls autoplay>
           <source src="Logic-Super Mario World.mp3"
           type="audio/mpeg">
         </audio> -->
-        <button type="button" class="btn btn-primary" id="start"><span style="color:green;">S</span><span style="color:blue;">t</span>art Game</button><br>
+        <div class="score-box">
+          <button type="button" class="btn btn-primary" id="start">Start Game</button><br>
+          <span></span>
+        </div>
+
 
         <!-- <canvas id="animate-area"></canvas> -->
         <!-- <canvas id="battle-area"></canvas> -->
         <!-- <div id ="animation">bounce</div> -->
         <!-- <img class="mario" src="images/mario.png" /> -->
         <!-- <canvas id="field-area"></canvas> -->
+        <div id="SplashScreen">
+          <div class="container">
+            <h1>Game Title</h1>
+            <input id="StartButton" type="button" value="Start"/>
+          </div>
+
+      </div>
         <canvas class="animate-area" id="canvas" height="540" width="902"></canvas>
 
       </div>

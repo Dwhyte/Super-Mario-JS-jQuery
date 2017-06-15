@@ -1,4 +1,12 @@
 
+
+    $("#StartButton").click(function () {
+        $("#SplashScreen").hide();
+        $("#canvas").show();
+    });
+
+
+
 // Mario's Movements
   $(document).keydown(function(e){
       switch (e.which){
@@ -15,25 +23,26 @@
         break;
 
       case 38:    //up arrow key
-        if (marioY === 0){
-            //Stop Moving Bro
 
-          }else{
               mario.width = 100;
               mario.height = 100;
               marioY = marioY - 30;
+
               ctx.clearRect(0, 0, c.width, c.height);
               ctx.drawImage(mario, marioX, marioY, mario.width, mario.height);
               mario.src = 'images/mario_flying_up.png';
-            }
+
           break;
       case 39:    //right arrow key
-
+        console.log(marioX);
+            if (marioX > 28372398472893742983){
+              //Do nada
+            } else {
             marioX = marioX + 30;
             ctx.clearRect(0, 0, c.width, c.height);
             ctx.drawImage(mario, marioX, marioY, mario.width, mario.height);
             mario.src = 'images/mario_flying_left.png';
-
+          }
           break;
       case 40:    //bottom arrow key
             // mario.width = 60;
@@ -210,6 +219,7 @@ function drawAll() {
     ctx.font = "14px Times New Roman";
     ctx.fillStyle = "black";
     ctx.fillText("Score: " + score, 10, 15);
+    $('span').text('Score: ' + score, 10, 15);
 }
 
 
