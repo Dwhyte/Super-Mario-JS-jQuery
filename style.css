@@ -26,10 +26,10 @@ body{
 }
 
 #SplashScreen{
-  width: 961px;
+  width: 955px;
   height: 536px;
   position: absolute;
-  left: 16%;
+  left: 210px;
   /* top: 57%; */
   background: rgba(71, 82, 93, 0.53);
 }
