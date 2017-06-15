@@ -34,6 +34,18 @@ body{
   background: rgba(71, 82, 93, 0.53);
 }
 
+
+.splash-text{
+  text-align: center;
+  position: relative;
+  top: 57px;
+  right: 117px;
+}
+
+.splash-text h1{
+  color:#fff;
+}
+
 .score-box{
   float: left;
 }
