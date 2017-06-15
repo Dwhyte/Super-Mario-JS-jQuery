@@ -192,17 +192,16 @@ function drawAll() {
     // ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     //draw mario
-    mario.onload = function() {
-    ctx.imageSmoothingEnabled = false;
-    ctx.drawImage(mario, marioX, marioY, mario.width, mario.height);
-    };
-    mario.src = 'images/mario.png';
+
 
     // draw the block
     // ctx.fillStyle = "skyblue";
     // ctx.fillRect(block.x, block.y, block.width, block.height);
     // ctx.strokeStyle = "lightgray";
     // ctx.strokeRect(block.x, block.y, block.width, block.height);
+
+    ctx.drawImage(mario, marioX, marioY, mario.width, mario.height);
+    mario.src = 'images/mario.png';
 
     // draw all rocks
     for (var i = 0; i < rocks.length; i++) {
