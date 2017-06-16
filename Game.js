@@ -268,7 +268,10 @@ var interval = setInterval(function() {
     {
         document.getElementById('timer').innerHTML = 'Refresh page to play again';
         clearInterval(interval);
-        ctx.clearRect(0, 0, c.width, c.height);
+        // if (!continueAnimating) {
+        //     continueAnimating = false;
+        //     animate();
+        // }
 
         return alert('Time has run out...You Lost');
     }
