@@ -146,11 +146,20 @@ ctx.clearRect(0, 0, c.width, c.height);
     }
 
     // draw the score
-    ctx.font = "20px Times New Roman";
-    ctx.fillStyle = "black";
-    ctx.fillText("Score: " + score, 10, 15);
+    // ctx.font = "20px Times New Roman";
+    // ctx.fillStyle = "black";
+    // ctx.fillText("Score: " + score, 10, 15);
+
+    $('.current-coins').text('Coins Collected: ' + score, 10, 15);
 
 }
+
+  // Score Board Info
+ // if($('.current-coins').text() === 'undefined'){
+ //   $('.current-coins').text('0');
+ // }else{
+ //   $('.current-coins').text('Coins Collected: ' + score, 10, 15);
+ // }
 
 ctx.clearRect(0, 0, c.width, c.height);
 
@@ -241,9 +250,29 @@ ctx.clearRect(0, 0, c.width, c.height);
       // var interval = setInterval(function(){
       //     if(new Date().getTime() - startTime > 30000){
       //         clearInterval(interval);
+      //
       //         return alert('Time has run out...You Lost');
+      //
+      //
       //     }
       //     //do whatever here..
       //
+      //
       // }, 1000);
+
+      var seconds_left = 30;
+var interval = setInterval(function() {
+    document.getElementById('timer').innerHTML = 'Time left: ' + --seconds_left;
+
+    if (seconds_left <= 0)
+    {
+        document.getElementById('timer').innerHTML = 'Refresh page to play again';
+        clearInterval(interval);
+        ctx.clearRect(0, 0, c.width, c.height);
+
+        return alert('Time has run out...You Lost');
+    }
+}, 1000);
+
+
   });
