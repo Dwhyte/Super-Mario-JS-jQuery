@@ -49,6 +49,35 @@
     }
 
 
+      // init bunch of sounds
+      ion.sound({
+          sounds: [
+              {name: "beer_can_opening"},
+              {name: "bell_ring"},
+              {name: "branch_break"},
+              {name: "button_click"},
+              {name: "coin_sound"}
+          ],
+
+          // main config
+
+          // Path to the folder where the sounds files are
+          path: "ion.sound-3.0.7/sounds/",
+
+          // Starts loading sound files even before you use them
+          preload: true,
+
+          // Multiple sounds at once
+          multiplay: true,
+
+          // volume set at 90%
+          volume: 0.9
+      });
+
+
+
+
+
     function animate() {
         // request another animation frame
 
@@ -67,6 +96,7 @@
 
             // test for coin-mario collision
             if (isColliding(coin, mario)) {
+                ion.sound.play('coin_sound');
                 score += 1;
                 resetCoin(coin);
             }
@@ -207,13 +237,13 @@ ctx.clearRect(0, 0, c.width, c.height);
           animate();
       }
 
-      var startTime = new Date().getTime();
-      var interval = setInterval(function(){
-          if(new Date().getTime() - startTime > 30000){
-              clearInterval(interval);
-              return alert('Time has run out...You Lost');
-          }
-          //do whatever here..
-
-      }, 1000);
+      // var startTime = new Date().getTime();
+      // var interval = setInterval(function(){
+      //     if(new Date().getTime() - startTime > 30000){
+      //         clearInterval(interval);
+      //         return alert('Time has run out...You Lost');
+      //     }
+      //     //do whatever here..
+      //
+      // }, 1000);
   });
