@@ -1,33 +1,14 @@
     //Create the canvas
       var c = document.getElementById('canvas');
       var ctx = c.getContext('2d');
-      var mario = new Image();
-      mario.width = 50;
-      mario.height = 100;
-      // var width = 20;
-      // var height = 50;
-      var marioX = 420;
-      var marioY = 350;
-      var speed = 1; // make this number smaller to move faster
-      var leftPointer, rightPointer, upPointer, downPointer;
-
 
       // Draw Mario :)
       mario.onload = function() {
       ctx.imageSmoothingEnabled = false;
-      ctx.drawImage(mario, marioX, marioY, mario.width, mario.height);
+      ctx.drawImage(mario, xMario, yMario, marioWidth, marioHeight);
       };
       mario.src = 'images/mario.png';
 
-
-
-
-function move() {
-    ctx.clearRect(0, 0, c.width, c.height);
-    ctx.drawImage(mario, marioX, marioY, mario.width, mario.height);
-    if (marioX < canvas.width - 10) marioX++;  /// 10 being an arbitrary value
-    if (marioY < canvas.height - 10) marioY++;
-}
 
 
 

@@ -1,3 +1,6 @@
+//Create the canvas
+  var c = document.getElementById('canvas');
+  var ctx = c.getContext('2d');
 
 
     $("#StartButton").click(function () {
@@ -5,232 +8,212 @@
         $("#canvas").show();
     });
 
+    // game variables
+    var startingScore = 0;
+    var continueAnimating = false;
+    var score;
+
+    var mario = new Image();
+    mario.src = 'images/mario.png';
+    var marioWidth = 50;
+    var marioHeight = 100;
+    var xMario = 420;
+    var yMario = 350;
 
 
-// Mario's Movements
-  $(document).keydown(function(e){
-      switch (e.which){
-      case 37:    //left arrow key
-          if (marioX === 0){
-            // Stop Moving Bro
-          }else{
-            marioX = marioX - 30;
-            speed = 1;
-            ctx.clearRect(0, 0, c.width, c.height);
-            ctx.drawImage(mario, marioX, marioY, mario.width, mario.height);
-            mario.src = 'images/mario_flying_right.png';
+    // coin variables
+    var coinWidth=50;
+    var coinHeight=50;
+    var totalCoins = 10;
+    var coins=[];
+    for(var i=0;i<totalCoins;i++){
+        addCoin();
+    }
+
+    // Add Coin
+    function addCoin(){
+        var coin={
+            width:coinWidth,
+            height:coinHeight
+        };
+        resetCoin(coin);
+        coins.push(coin);
+    }
+
+    // move the coin to a random position near the top-of-canvas
+    // assign the coin a random speed
+    function resetCoin(coin){
+        coin.x=Math.random()*(canvas.width-coinWidth);
+        coin.y=15+Math.random()*30;
+        coin.speed=0.9+Math.random()*0.5;
+    }
+
+
+    function animate() {
+        // request another animation frame
+
+        if (continueAnimating) {
+            requestAnimationFrame(animate);
         }
-        break;
 
-      case 38:    //up arrow key
+        // for each coin
+        // (1) check for collisions
+        // (2) advance the coin
+        // (3) if the coin falls below the canvas, reset that coin
 
-              mario.width = 100;
-              mario.height = 100;
-              marioY = marioY - 30;
+        for (var i = 0; i < coins.length; i++) {
 
-              ctx.clearRect(0, 0, c.width, c.height);
-              ctx.drawImage(mario, marioX, marioY, mario.width, mario.height);
-              mario.src = 'images/mario_flying_up.png';
+            var coin = coins[i];
 
-          break;
-      case 39:    //right arrow key
-        console.log(marioX);
-            if (marioX > 28372398472893742983){
-              //Do nada
-            } else {
-            marioX = marioX + 30;
-            ctx.clearRect(0, 0, c.width, c.height);
-            ctx.drawImage(mario, marioX, marioY, mario.width, mario.height);
-            mario.src = 'images/mario_flying_left.png';
-          }
-          break;
-      case 40:    //bottom arrow key
-            // mario.width = 60;
-            // mario.height = 75;
-            marioY = marioY + 30;
-            ctx.clearRect(0, 0, c.width, c.height);
-            ctx.drawImage(mario, marioX, marioY, mario.width, mario.height);
-            mario.src = 'images/mario_dropping_down.png';
-          break;
-      default:
-            mario.width = 50;
-            mario.height = 100;
-            ctx.clearRect(0, 0, c.width, c.height);
-            ctx.drawImage(mario, marioX, marioY, mario.width, mario.height);
-            mario.src = 'images/mario.png';
-      }
-  });
+            // test for coin-mario collision
+            if (isColliding(coin, mario)) {
+                score += 1;
+                resetCoin(coin);
+            }
+            // advance the coins
+            coin.y += coin.speed;
 
-
-
-var keys = {};
-window.addEventListener("keydown",
-    function(e){
-        keys[e.keyCode] = true;
-        switch(e.keyCode){
-            case 37: case 39: case 38:  case 40: // Arrow keys
-            case 32: e.preventDefault(); break; // Space
-            default: break; // do not block other keys
+            // if the coin is below the canvas,
+            if (coin.y > canvas.height) {
+                resetCoin(coin);
+            }
         }
-    },
-false);
-window.addEventListener('keyup',
-    function(e){
-        keys[e.keyCode] = false;
-    },
-false);
+        // redraw everything
+        drawAll();
+    }
 
+    function isColliding(a, b) {
+         return !(
+        xMario > a.x + coinWidth || xMario + marioWidth < a.x || yMario > a.y + coinHeight || yMario + marioHeight < a.y);
+    }
 
-
-
-
-
-
-
-
-
-
-
-  // game variables
-var startingScore = 0;
-var continueAnimating = false;
-var score;
-
-// block variables
-var blockWidth = 30;
-var blockHeight = 15;
-var blockSpeed = 100;
-var block = {
-    x: 0,
-    y: canvas.height - blockHeight,
-    width: blockWidth,
-    height: blockHeight,
-    blockSpeed: blockSpeed
+mario.onload = function() {
+  mario.isLoaded = true;
+  ctx.imageSmoothingEnabled = false;
+  // var marioImg = new Image();
+  ctx.drawImage(mario, xMario, yMario, marioWidth, marioHeight);
+  // ctx.drawImage(mario, marioX, marioY, mario.width, mario.height);
 };
 
-
-// rock variables
-var rockWidth = 40;
-var rockHeight = 40;
-var totalRocks = 10;
-var rocks = [];
-for (var i = 0; i < totalRocks; i++) {
-    addRock();
-}
-
-function addRock() {
-    var rock = {
-        width: rockWidth,
-        height: rockHeight
-    };
-    resetRock(rock);
-    rocks.push(rock);
-}
-
-
-// move the rock to a random position near the top-of-canvas
-// assign the rock a random speed
-function resetRock(rock) {
-    rock.x = Math.random() * (canvas.width - rockWidth);
-    rock.y = 15 + Math.random() * 30;
-    rock.speed = 0.2 + Math.random() * 0.5;
-}
-
-
-
-function animate() {
-
-    // request another animation frame
-
-    if (continueAnimating) {
-        requestAnimationFrame(animate);
-    }
-
-    // for each rock
-    // (1) check for collisions
-    // (2) advance the rock
-    // (3) if the rock falls below the canvas, reset that rock
-
-    for (var i = 0; i < rocks.length; i++) {
-
-        var rock = rocks[i];
-
-        // test for rock-block collision
-        if (isColliding(rock, block)) {
-            score -= 10;
-            resetRock(rock);
-        }
-
-        // advance the rocks
-        rock.y += rock.speed;
-
-        // if the rock is below the canvas,
-        if (rock.y > canvas.height) {
-            resetRock(rock);
-        }
-
-    }
-
-    // redraw everything
-    drawAll();
-
-}
-
-function isColliding(a, b) {
-    return !(
-    b.x > a.x + a.width || b.x + b.width < a.x || b.y > a.y + a.height || b.y + b.height < a.y);
-}
-
-function drawAll() {
-
+function drawAll(){
     // clear the canvas
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+ctx.clearRect(0, 0, c.width, c.height);
 
-    // // draw the background
-    // // (optionally drawImage an image)
-    // ctx.fillStyle = "ivory";
-    // ctx.fillRect(0, 0, canvas.width, canvas.height);
+//ctx.drawImage(mario, marioX, marioY, marioWidth, marioWeight);
 
-    //draw mario
+    // draw all coins
+    for (var i = 0; i < coins.length; i++) {
+        var coin = coins[i];
+        var coinsImg = new Image();
+        coinsImg.src = 'images/150x_coin_image.png';
+        ctx.drawImage(coinsImg,coin.x,coin.y,coin.width, coin.height);
 
-
-    // draw the block
-    // ctx.fillStyle = "skyblue";
-    // ctx.fillRect(block.x, block.y, block.width, block.height);
-    // ctx.strokeStyle = "lightgray";
-    // ctx.strokeRect(block.x, block.y, block.width, block.height);
-
-    ctx.drawImage(mario, marioX, marioY, mario.width, mario.height);
-    mario.src = 'images/mario.png';
-
-    // draw all rocks
-    for (var i = 0; i < rocks.length; i++) {
-        var rock = rocks[i];
-        var rocksImg = new Image();
-        //optionally,
-        rocksImg.src = 'images/150x_coin_image.png';
-        ctx.drawImage(rocksImg,rock.x,rock.y,rock.width, rock.height);
-        // ctx.fillStyle = "gray";
-        // ctx.fillRect(rock.x, rock.y, rock.width, rock.height);
+    }
+    //
+    // Draw Mario :)
+    if (mario.isLoaded) {
+      ctx.drawImage(mario, xMario, yMario, marioWidth, marioHeight);
     }
 
     // draw the score
     ctx.font = "20px Times New Roman";
     ctx.fillStyle = "black";
     ctx.fillText("Score: " + score, 10, 15);
-    $('span').text('Score: ' + score, 10, 15);
+
 }
 
+ctx.clearRect(0, 0, c.width, c.height);
 
-// button to start the game
-$("#start").click(function () {
-    score = startingScore;
-    block.x = 0;
-    for (var i = 0; i < rocks.length; i++) {
-        resetRock(rocks[i]);
-    }
-    if (!continueAnimating) {
-        continueAnimating = true;
-        animate();
-    }
-});
+// Mario's Movements
+  $(document).keydown(function(e){
+      switch (e.which){
+      case 37:    //left arrow key
+          if (xMario === 0){
+            // Stop Moving Bro
+          }else{
+            marioWidth = 100;
+            marioHeight = 100;
+            xMario = xMario - 60;
+            speed = 1;
+            ctx.clearRect(0, 0, c.width, c.height);
+            ctx.drawImage(mario, xMario, yMario, marioWidth, marioHeight);
+            mario.src = 'images/mario_flying_right.png';
+        }
+        break;
+
+      case 38:    //up arrow key
+              if (yMario < 0){
+                // Stop Moving Bro
+              }else{
+              marioWidth = 100;
+              marioHeight = 100;
+              yMario = yMario - 60;
+
+              ctx.clearRect(0, 0, c.width, c.height);
+              ctx.drawImage(mario, xMario, yMario, marioWidth, marioHeight);
+              mario.src = 'images/mario_flying_up.png';
+            }
+            console.log(xMario);
+          break;
+      case 39:    //right arrow key
+
+            if (xMario > 800){
+              //Do nada
+            } else {
+            marioWidth = 100;
+            marioHeight = 100;
+            xMario = xMario + 60;
+            ctx.clearRect(0, 0, c.width, c.height);
+            ctx.drawImage(mario, xMario, yMario, marioWidth, marioHeight);
+            mario.src = 'images/mario_flying_left.png';
+          }
+          console.log(xMario);
+          break;
+      case 40:    //bottom arrow key
+          if (yMario >= 440){
+            // Stop Moving Bro
+          }else{
+            marioWidth = 100;
+            marioHeight = 100;
+            yMario = yMario + 60;
+            ctx.clearRect(0, 0, c.width, c.height);
+            ctx.drawImage(mario, xMario, yMario, marioWidth, marioHeight);
+            mario.src = 'images/mario_dropping_down.png';
+          }
+          console.log(yMario);
+          break;
+      default:
+            marioWidth = 50;
+            marioHeight = 100;
+            ctx.clearRect(0, 0, c.width, c.height);
+            ctx.drawImage(mario, xMario, yMario, marioWidth, marioHeight);
+            mario.src = 'images/mario.png';
+      }
+  });
+
+
+
+  // button to start the game
+  $("#StartButton").click(function () {
+      score = startingScore;
+      xMario = 420;
+      mario.src = 'images/mario.png';
+      ctx.drawImage(mario, xMario, yMario, marioWidth, marioHeight);
+      for (var i = 0; i < coins.length; i++) {
+          resetCoin(coins[i]);
+      }
+      if (!continueAnimating) {
+          continueAnimating = true;
+          animate();
+      }
+
+      var startTime = new Date().getTime();
+      var interval = setInterval(function(){
+          if(new Date().getTime() - startTime > 30000){
+              clearInterval(interval);
+              return alert('Time has run out...You Lost');
+          }
+          //do whatever here..
+
+      }, 1000);
+  });

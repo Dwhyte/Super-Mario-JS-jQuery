@@ -1,3 +1,8 @@
+@import url('https://fonts.googleapis.com/css?family=Hammersmith+One');
+@import url('https://fonts.googleapis.com/css?family=Press+Start+2P');
+
+
+
 
 .title{
   text-align: center;
@@ -43,7 +48,9 @@ body{
 }
 
 .splash-text h1{
-  color:#fff;
+  color:#ffec51;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 33px;
 }
 
 .score-box{
